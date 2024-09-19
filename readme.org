@@ -16,3 +16,8 @@ This script assumes you are under Wayland session and using systemd.
 
 If that script will be useful to someone and aur package will be needed - create
 an issue.
+
+Installation:
+
+Put that script under =/etc/NetworkManager/dispatcher.d/90-open_captive_portal=,
+make it executable and reload =NetworkManager= service.
