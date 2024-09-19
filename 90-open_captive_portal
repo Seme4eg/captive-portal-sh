@@ -19,10 +19,11 @@ open_captive() {
     xdg-open "${captive_url}"
 }
 
-# Run the right scripts
 case "$2" in
   connectivity-change)
-    $logger -p user.debug "dispatcher script triggered on connectivity change: $CONNECTIVITY_STATE"
+    $logger -p user.debug \
+      "dispatcher script triggered on connectivity change: $CONNECTIVITY_STATE"
+
     if [ "$CONNECTIVITY_STATE" = "PORTAL" ]; then
       user=$(who | head -n1 | cut -d' ' -f 1)
 
