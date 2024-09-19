@@ -1,0 +1,18 @@
+#+title: Captive portal dispatcher script
+
+Motivation:
+
+I don't use any DE that would handle captive portals for me, hence i need
+something like that script.
+
+None of at the time listed on arch-wiki solutions to 'auto-opening' captive
+portal on public networks worked for me. Either didn't work because was written
+for X, was simply trying to open some http page or required some additional
+setup like using chrome or other additional packages. All i needed was to just
+figure out the captive portal url and open its page in default browser. That all
+this script does.
+
+This script assumes you are under Wayland session and using systemd.
+
+If that script will be useful to someone and aur package will be needed - create
+an issue.
