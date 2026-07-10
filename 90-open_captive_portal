@@ -13,7 +13,8 @@ else
 fi
 
 open_captive() {
-  captive_url=http://$(ip --oneline route get 1.1.1.1 | awk '{print $3}')
+  captive_url="http://connectivitycheck.gstatic.com/generate_204"
+
   sudo -u "$1" DISPLAY=":0" \
     DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/"$(id -u "$1")"/bus \
     xdg-open "${captive_url}"
