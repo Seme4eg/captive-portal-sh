@@ -26,7 +26,8 @@ case "$2" in
       "dispatcher script triggered on connectivity change: $CONNECTIVITY_STATE"
 
     if [ "$CONNECTIVITY_STATE" = "PORTAL" ]; then
-      user=$(who | head -n1 | cut -d' ' -f 1)
+      user="${SUDO_USER:-}"
+      [ -z "$user" ] && user="$(loginctl list-sessions --no-legend 2>/dev/null | awk 'NR==1{print $3}')"
 
       $logger "Running browser as '$user' to login in captive portal"
 
