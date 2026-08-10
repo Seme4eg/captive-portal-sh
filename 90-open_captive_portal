@@ -14,9 +14,10 @@ fi
 
 open_captive() {
   captive_url="http://connectivitycheck.gstatic.com/generate_204"
+  uid="$(id -u "$1")" || return 1
 
   sudo -u "$1" env DISPLAY=":0" \
-    DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/"$(id -u "$1")"/bus \
+    DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/"${uid}"/bus \
     xdg-open "${captive_url}"
 }
 
@@ -31,7 +32,11 @@ case "$2" in
 
       $logger "Running browser as '$user' to login in captive portal"
 
-      open_captive "$user" || $logger -p user.err "Failed for user: '$user'"
+      if [ -n "$user" ]; then
+        open_captive "$user" || $logger -p user.err "Failed for user: '$user'"
+      else
+        $logger -p user.err "Failed to determine logged-in user"
+      fi
     fi
     ;;
   *) exit 0 ;;
