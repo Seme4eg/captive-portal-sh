@@ -3,7 +3,8 @@
 Motivation:
 
 I don't use any DE that would handle captive portals for me, hence i need
-something like that script.
+something like that script. This script is NOT for those using any DE as your DE
+should handle captives.
 
 None of at the time listed on arch-wiki solutions to 'auto-opening' captive
 portal on public networks worked for me. Either didn't work because was written
