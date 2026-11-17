@@ -15,9 +15,27 @@ fi
 open_captive() {
   captive_url="http://connectivitycheck.gstatic.com/generate_204"
   uid="$(id -u "$1")" || return 1
+  runtime="/run/user/${uid}"
 
-  sudo -u "$1" env DISPLAY=":0" \
-    DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/"${uid}"/bus \
+  wl_display=""
+  for sock in "$runtime"/wayland-*; do
+    if [ -S "$sock" ]; then
+      wl_display="${sock##*/}"
+      break
+    fi
+  done
+  x_display=""
+  for sock in /tmp/.X11-unix/X*; do
+    if [ -S "$sock" ] && [ "$(stat -c %u "$sock")" = "$uid" ]; then
+      x_display=":${sock##*/X}"
+      break
+    fi
+  done
+
+  sudo -u "$1" env XDG_RUNTIME_DIR="$runtime" \
+    ${wl_display:+WAYLAND_DISPLAY="$wl_display"} \
+    ${x_display:+DISPLAY="$x_display"} \
+    DBUS_SESSION_BUS_ADDRESS=unix:path="${runtime}"/bus \
     xdg-open "${captive_url}"
 }
 
